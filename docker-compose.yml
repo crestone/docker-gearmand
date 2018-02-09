@@ -1,0 +1,22 @@
+version: '2'
+services:
+
+  gearmand:
+    container_name: gearmand
+    hostname: gearmand
+    build: gearmand
+    restart: always
+    user: gearmand
+    command: |
+      gearmand
+        --log-file=stderr
+        --verbose=INFO
+        --queue-type=postgres
+        --libpq-conninfo='
+        host=postgres
+        user=${POSTGRES_USER}
+        password=${POSTGRES_PASS}
+        dbname=${POSTGRES_USER}'
+        --libpq-table=queue
+    ports:
+      - 127.0.0.1:4730:4730
